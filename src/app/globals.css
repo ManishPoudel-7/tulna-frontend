@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    background: #D9E4C6;
+    color: #2B3A2E;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-cream-dark text-ink-on-dark;
+    }
+    ::selection {
+      background: #2F3B29;
+      color: #EFEBE1;
+    }
+  }
+
+  *:focus-visible {
+    outline: 2px solid #6B8E4E;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E3DCCE;
+    border-radius: 9999px;
+  }
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+      background: #2E362F;
+    }
+  }
+}
+
+@layer components {
+  .shimmer-bg {
+    background: linear-gradient(90deg, #EDE6D7 0%, #FBF8F2 50%, #EDE6D7 100%);
+    background-size: 200% 100%;
+  }
+  @media (prefers-color-scheme: dark) {
+    .shimmer-bg {
+      background: linear-gradient(90deg, #2E362F 0%, #232B25 50%, #2E362F 100%);
+      background-size: 200% 100%;
+    }
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Decorative noise for the cream canvas — very subtle */
+  .cream-grain {
+    background-image:
+      radial-gradient(1200px 500px at 50% -10%, rgba(107,142,78,0.06), transparent 60%),
+      radial-gradient(900px 400px at 100% 100%, rgba(195,102,58,0.05), transparent 60%);
+  }
+  @media (prefers-color-scheme: dark) {
+    .cream-grain {
+      background-image:
+        radial-gradient(1200px 500px at 50% -10%, rgba(159,190,127,0.08), transparent 60%),
+        radial-gradient(900px 400px at 100% 100%, rgba(224,138,97,0.06), transparent 60%);
+    }
+  }
+}
