@@ -3,6 +3,7 @@
 import { Playfair_Display, Manrope } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/components/AuthProvider';
+import { CartProvider } from '@/components/CartProvider';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -30,7 +31,9 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#1A1F1C" media="(prefers-color-scheme: dark)" />
       </head>
       <body className="font-sans min-h-screen">
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <CartProvider>{children}</CartProvider>
+      </AuthProvider>
       </body>
     </html>
   );

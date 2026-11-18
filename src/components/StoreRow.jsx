@@ -1,6 +1,16 @@
 import { ExternalLink, Zap } from 'lucide-react';
 import { formatINR, discountPct } from '@/lib/format';
 
+const BRAND_BAR = {
+  blinkit:  'bg-[#F8CB46]',
+  zepto:    'bg-[#5B1E9E]',
+  instamart:'bg-[#FC8019]',
+  bigbasket:'bg-[#84C225]',
+  dmart:    'bg-[#1B4F9A]',
+  jiomart:  'bg-[#00318D]',
+  flipkart: 'bg-[#2874F0]',
+};
+
 export default function StoreRow({ store, isBest, bestPrice }) {
   const { platform, icon, price, mrp, delivery, url } = store;
   const pct = discountPct(price, mrp);

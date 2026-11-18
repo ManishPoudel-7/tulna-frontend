@@ -1,5 +1,8 @@
+'use client';
+
 import { Sprout } from 'lucide-react';
 import { PlatformDisc } from '@/components/PlatformBadge';
+import AddToCartControl from '@/components/AddToCartControl';
 import { formatINR, unitPrice, discountPct } from '@/lib/format';
 
 export default function ProductCard({ product, onSelect }) {
@@ -10,10 +13,16 @@ export default function ProductCard({ product, onSelect }) {
   const pct = best ? discountPct(best.price, best.mrp) : null;
   const multi = storeCount > 1;
 
+  const open = () => onSelect(product);
+  const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } };
+
   return (
-    <button
-      onClick={() => onSelect(product)}
-      className="w-full text-left bg-cream-soft dark:bg-cream-card-dark
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={open}
+      onKeyDown={onKey}
+      className="w-full text-left cursor-pointer bg-cream-soft dark:bg-cream-card-dark
         rounded-card border border-rule dark:border-rule-dark
         shadow-soft dark:shadow-soft-dark
         hover:shadow-lift dark:hover:shadow-lift-dark
@@ -21,7 +30,6 @@ export default function ProductCard({ product, onSelect }) {
         transition-all duration-200 group overflow-hidden"
     >
       <div className="p-5 flex items-center gap-4">
-        {/* Circular image tile */}
         <div className="w-20 h-20 rounded-full bg-cream dark:bg-cream-dark ring-1 ring-rule dark:ring-rule-dark
           flex-shrink-0 overflow-hidden flex items-center justify-center">
           {image ? (
@@ -31,7 +39,6 @@ export default function ProductCard({ product, onSelect }) {
           )}
         </div>
 
-        {/* Info */}
         <div className="flex-1 min-w-0">
           <h3 className="font-serif text-[18px] leading-tight text-ink dark:text-ink-on-dark line-clamp-2">
             {name}
@@ -62,9 +69,12 @@ export default function ProductCard({ product, onSelect }) {
             <p className="text-xs text-ink-soft dark:text-ink-soft-on-dark mt-1.5 tabular-nums">{up}</p>
           )}
         </div>
+
+        <div className="flex-shrink-0 self-start pt-1">
+          <AddToCartControl product={product} variant="icon" />
+        </div>
       </div>
 
-      {/* Footer strip */}
       <div className="px-5 py-3 border-t border-rule/70 dark:border-rule-dark/70
         bg-cream/40 dark:bg-cream-dark/40 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 min-w-0">
@@ -96,6 +106,6 @@ export default function ProductCard({ product, onSelect }) {
           </span>
         )}
       </div>
-    </button>
+    </div>
   );
 }

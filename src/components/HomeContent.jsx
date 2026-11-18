@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
@@ -12,6 +13,9 @@ import SortMenu from '@/components/SortMenu';
 import Skeletons from '@/components/Skeletons';
 import EmptyState from '@/components/EmptyState';
 import { ErrorCard, ErrorNote } from '@/components/ErrorState';
+import CartFab from '@/components/CartFab';
+import CartSheet from '@/components/CartSheet';
+import SignInLanding from '@/components/SignInLanding';
 import { useLocation } from '@/hooks/useLocation';
 import { searchPrices } from '@/lib/api';
 
@@ -42,6 +46,7 @@ export default function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const abortRef = useRef(null);
+  const { status: authStatus } = useSession();
 
   const {
     location, setLocation,
@@ -104,6 +109,25 @@ export default function HomeContent() {
   const sorted = sortResults(results, sortBy);
   const hasResults = sorted && sorted.length > 0;
   const noResults = sorted && sorted.length === 0 && !loading && !fetchError;
+
+  // Gate the whole experience behind sign-in.
+  if (authStatus === 'loading') {
+    return (
+      <div className="min-h-screen cream-grain">
+        <Header location={null} onLocationClick={() => {}} />
+      </div>
+    );
+  }
+  if (authStatus === 'unauthenticated') {
+    return (
+      <div className="min-h-screen cream-grain">
+        <Header location={null} onLocationClick={() => {}} />
+        <main className="max-w-content mx-auto">
+          <SignInLanding />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen cream-grain">
@@ -178,6 +202,9 @@ export default function HomeContent() {
       {selectedProduct && (
         <ProductSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
+
+      <CartFab />
+      <CartSheet />
     </div>
   );
 }

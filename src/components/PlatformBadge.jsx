@@ -4,6 +4,9 @@ const DOTS = {
   instamart: '#FC8019',
   'swiggy instamart': '#FC8019',
   bigbasket: '#84C225',
+  dmart: '#1B4F9A',
+  jiomart: '#00318D',
+  flipkart: '#2874F0',
 };
 
 export default function PlatformBadge({ platform, icon, size = 'sm' }) {

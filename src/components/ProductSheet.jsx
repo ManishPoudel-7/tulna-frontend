@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { X, Sprout } from 'lucide-react';
 import StoreRow from '@/components/StoreRow';
+import AddToCartControl from '@/components/AddToCartControl';
 import { unitPrice, formatINR } from '@/lib/format';
 
 export default function ProductSheet({ product, onClose }) {
@@ -109,6 +110,11 @@ export default function ProductSheet({ product, onClose }) {
               bestPrice={bestPrice}
             />
           ))}
+        </div>
+
+        {/* Sticky add-to-basket footer */}
+        <div className="px-5 py-4 border-t border-rule dark:border-rule-dark bg-cream-soft/95 dark:bg-cream-card-dark/95 backdrop-blur-sm">
+          <AddToCartControl product={product} variant="bar" />
         </div>
       </div>
     </div>
